@@ -1,6 +1,7 @@
 name = "devflow-worker"
 description = "Implements or corrects one task, or records a blocking question through `ratchet`."
 
+# The runner selects this role's model and reasoning effort from the task's expected artifact type.
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''

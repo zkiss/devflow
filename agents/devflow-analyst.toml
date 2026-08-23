@@ -1,6 +1,7 @@
 name = "devflow-analyst"
 description = "Answers one bounded question recorded through `ratchet`."
 
+model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''

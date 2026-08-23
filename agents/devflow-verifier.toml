@@ -1,6 +1,7 @@
 name = "devflow-verifier"
 description = "Runs deterministic checks for one task candidate recorded through `ratchet`."
 
+model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''

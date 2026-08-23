@@ -1,6 +1,7 @@
 name = "devflow-planner"
 description = "Decomposes a Deliverable or scope gap into coherent work tasks through `ratchet`."
 
+model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
@@ -35,6 +36,8 @@ decomposition and specification, not implementation.
   it, and include the task-specific context not supplied by those sources.
 - Specify implementation only when the request or established architecture requires it.
 - Use IDs and summaries that make dependency-safe execution order visible to the runner.
+- Write every work-task summary so its expected changes make clear whether the work is code-only,
+  specification or documentation work, or a mixture of both.
 - Keep the number of tasks as small as coherence, ordering, and independent assurance allow.
 - Keep completed scope immutable and create a separate task for required work outside existing
   scope.

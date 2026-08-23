@@ -1,6 +1,7 @@
 name = "devflow-reviewer"
 description = "Independently reviews one task candidate recorded through `ratchet`."
 
+# The runner selects this role's model and reasoning effort from the task's expected artifact type.
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
