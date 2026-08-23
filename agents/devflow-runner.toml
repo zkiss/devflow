@@ -29,7 +29,6 @@ response.
   output.
 - Delegate every investigation, implementation, verification, and review.
 - Do not preload histories or reread unchanged context.
-- After every specialist response, reread current ledger state through `ratchet` before deciding.
 
 ## Start one Deliverable
 
@@ -43,7 +42,10 @@ existing ledger's `deliverable` summary with the current request:
 
 Create the reserved `deliverable` task only for a new ledger. Preserve the user's request,
 acceptance outcome, constraints, and supplied context without investigating or enriching them.
-Dispatch the planner on `deliverable`; it must create at least one work task.
+
+Before the first dispatch for either a new or resumed ledger, run the global `ratchet log` once and
+set a handoff cursor to its highest sequence, or zero when the log is empty. For a new ledger, then
+dispatch the planner on `deliverable`; it must create at least one work task.
 
 ## Dispatch
 
@@ -60,8 +62,11 @@ Task <task-id>. <action>.
 Use role-specific actions such as:
 
 - planner: `Task deliverable. Produce the work-task breakdown.`
+- planner for a scope gap:
+  `Task <task-id>, question <question-id>. Decompose the recorded scope gap.`
 - analyst: `Task <task-id>, question <question-id>. Answer the recorded question.`
 - worker: `Task <task-id>. Implement the recorded task.`
+- worker after prerequisites: `Task <task-id>. Resume implementation after its prerequisites.`
 - worker after review: `Task <task-id>. Address the latest review feedback.`
 - worker after a gate failure: `Task <task-id>. Address the latest gate failure.`
 - reviewer: `Task <task-id>. Review the latest candidate.`
@@ -71,11 +76,23 @@ Every dispatch names exactly one task and one immediate action, plus any seconda
 that action. Add only minimal transient clarification needed to interpret the action. Record
 requirements, findings, diagnostics, proposed fixes, and prior conclusions in the ledger first.
 
+Keep the handoff cursor at the highest processed ledger sequence. Whenever you write an entry
+yourself, update the cursor from the sequence shown by that command. The specialist response
+signals that the handoff ended; it does not carry the result.
+
+After the response, run the global `ratchet log --start <next-sequence>`, where `<next-sequence>` is
+the cursor plus one because `--start` is inclusive. The returned entries are the handoff outcome.
+Read their summaries, interpret multiple entries together, reread status, and then move the cursor
+to the highest returned sequence. An empty result means the handoff made no durable progress.
+Treat it as a protocol or execution failure: do not accept the response as an outcome or redispatch
+the same action. Correct an evident protocol failure; otherwise stop and ask the user.
+
 ## Drive work tasks
 
 Choose the next action from current state:
 
 - unclear scope or missing decomposition: planner;
+- open scope-gap question: planner on that task and question;
 - open question requiring repository evidence: analyst;
 - open question requiring user judgment: ask the user, then record the answer;
 - missing implementation or failed gate or review: worker;
@@ -83,9 +100,15 @@ Choose the next action from current state:
 - missing or stale review: reviewer;
 - current gate pass, current review pass, and no open questions: complete the task.
 
-Process work tasks one at a time in dependency-safe order, completing each before implementation
-begins on the next. Run every newly discovered task through the same loop. Treat blockers reported
-by `ratchet` as authoritative unless the exceptional force policy applies.
+Keep one specialist dispatch active at a time. The runner may choose any dependency-safe open task,
+but should prefer finishing the active work task. When a blocking question suspends it, prefer the
+tasks needed to unblock it and avoid unrelated interleaving. The runner chooses the routing, but
+every work task is created by the planner.
+
+After every task named by a scope-gap answer is complete, return the suspended task to the worker.
+Do so even when that task already has an advance, and require a later advance before dispatching
+assurance. Run every new task through the same implementation and assurance loop. Treat blockers
+reported by `ratchet` as authoritative unless the exceptional force policy applies.
 
 ## Detect non-convergence
 

@@ -15,9 +15,9 @@ Before doing anything, load the `devflow` skill. From its lookup table load only
 - Scope and questions
 
 Require exactly one `ratchet` task ID, one question ID, and a dispatch action to answer that
-question. First run `ratchet status <task-id>`. Read the dispatch text, then inspect the task's event
-summaries and load the exact question, its details, and any decisions or prior results needed to
-answer it.
+question. First run `ratchet status <task-id>`. Read the dispatch text, then read the task's complete
+event-summary history. Load the exact question and only the decision, question, answer, result, and
+finding details relevant to answering it.
 
 ## Role
 

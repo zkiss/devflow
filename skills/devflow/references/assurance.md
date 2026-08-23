@@ -1,33 +1,33 @@
 # Assurance
 
-A gate and a review are independent checks of the same latest candidate commit. Both must pass
-after its latest advance.
+A gate and a review are independent checks of the same candidate commit. A candidate requires both
+checks to pass.
 
 ## Gate
 
-A gate supplies deterministic evidence. Run the authoritative applicable build, tests, lint,
-typecheck, formatting, spec validation, generated-file checks, or equivalents. A `deliverable` gate
-runs the full authoritative suite; a work-task gate runs every check applicable to that increment.
+A gate supplies deterministic evidence from the authoritative build, tests, lint, typecheck,
+formatting, spec validation, generated-file checks, and equivalents applicable to the candidate. A
+`deliverable` gate covers the full authoritative suite; a work-task gate covers every check
+applicable to that increment.
 
 PASS means all required checks succeeded. FAIL means any required check failed, could not run
-reliably, or returned an invalid result. Never weaken or skip a required check. Record commands and
-concise diagnostics in the gate entry's details.
+reliably, returned an invalid result, or was weakened or omitted. Gate details identify the
+commands and concise diagnostics that support the result.
 
 ## Review
 
-A review supplies independent semantic engineering judgment. Assess the task's scope and
-acceptance scenarios, correctness, missing behavior, architecture consistency, complexity,
-maintainability, error handling, tests, compatibility, migrations, security, concurrency,
-documentation, and unrelated changes as applicable.
+A review supplies independent semantic engineering judgment. Its applicable dimensions include
+the task's scope and acceptance scenarios, correctness, missing behavior, architecture
+consistency, complexity, maintainability, error handling, tests, compatibility, migrations,
+security, concurrency, documentation, and unrelated changes.
 
-For `deliverable`, review the combined change holistically against the full user outcome rather
-than rechecking tasks in isolation. Passing tests do not replace this judgment. Do not fail for an
-optional enhancement outside the Deliverable. Record actionable failure findings, impacts, and
-locations in the review entry's details.
+A `deliverable` review covers the combined change holistically against the full user outcome rather
+than rechecking tasks in isolation. Passing deterministic checks does not replace this judgment,
+and an optional enhancement outside the Deliverable is not a failure. Review failure details
+identify each actionable finding, its impact, and its location.
 
 ## Correction loop
 
-After either failure, the next implementation pass reads the failed entry, fixes the recorded
-issues, commits, and advances the task. That advance makes both prior assurance results stale, so
-verification and review must run again. Repeated or alternating failures require root-cause
-intervention before another blind correction cycle.
+After either failure, a corrected candidate is a new committed advance that addresses the recorded
+issues and requires both checks again. Repeated or alternating failures are non-convergence and
+require a root-cause resolution before another correction cycle.

@@ -1,28 +1,44 @@
 # Scope and questions
 
-## Define the outcome and its increments
+## Outcome and increments
 
 The `deliverable` task preserves the user's complete requested outcome, acceptance expectations,
 constraints, and supplied context. It governs the whole ledger.
 
-Each work task is self-contained and describes one coherent increment toward that outcome. Include
-the relevant Deliverable context, objective, acceptance scenarios, boundaries, dependencies, and
-material constraints. Specify implementation only when the request or established architecture
-requires it. Make dependency-safe execution order visible in task IDs and summaries.
+Each work task describes one coherent increment toward that outcome. Its required context may come
+from the task definition, later ledger events, and existing repository files cited by
+repository-root-relative path. Existing repository context, including specifications and
+documentation, is cited rather than copied. The definition contains the task-specific objective,
+acceptance scenarios, boundaries, dependencies, and material constraints not already supplied by
+those sources. Implementation detail appears only when the request or established architecture
+requires it. Task IDs and summaries make dependency-safe execution order visible.
 
-Create the smallest set of tasks that remains coherent and orderable. Add a task whenever required
-work is discovered outside every existing task. Do not silently absorb unrelated work or rewrite
-completed scope.
+Repository file references must be durable. In a Git repository, only files already tracked by Git
+are eligible task references. A file earns its place in Git independently of a task: no file is
+added or committed merely so a task can cite it. When generated output, logs, temporary files, or
+other untracked artifacts contain necessary evidence, the ledger contains the relevant concise
+diagnostics or a reproducible command instead of a reference to the artifact.
 
-## Resolve questions explicitly
+A valid decomposition is the smallest set of tasks that remains coherent and orderable. Required
+work discovered outside every existing task is a separate work task; it is not silently absorbed
+or added by rewriting completed scope.
 
-Use task-scoped question IDs for material ambiguity, user decisions, and bounded root-cause
-investigations. Multiple questions may remain open, and completion is blocked until all are closed.
+A **scope gap** exists when required work outside the current task blocks it. Resolving the gap
+determines whether that work belongs to another open task or requires a new task. The gap is
+represented by a blocking question on the current task. Its summary identifies the gap as requiring
+decomposition, and its details record the evidence, impact, and recommended next step. The answer
+summary identifies the prerequisite task IDs, their dependency order, and when the blocked task can
+resume.
 
-Investigate one recorded question at a time. Start from that question, inspect only relevant
-repository and ledger context, distinguish evidence from hypothesis, and record the answer and
-supporting evidence through `ratchet answer`.
+## Questions
 
-When a loop flip-flops, ask for the root cause and a convergent correction rather than another
-isolated symptom fix. Ask the user when the choice depends on product intent or acceptable
-tradeoffs that repository evidence cannot resolve.
+Question IDs are task-scoped. Questions represent scope gaps, material ambiguity, user decisions,
+or bounded root-cause investigations. Multiple questions may remain open, and completion is blocked
+until all are closed.
+
+Each bounded investigation addresses one recorded question. Its answer distinguishes verified
+evidence from hypotheses and includes the supporting repository and ledger evidence.
+
+A non-convergence question seeks the root cause and a convergent correction rather than another
+isolated symptom fix. Repository evidence can resolve factual questions; a choice that depends on
+product intent or acceptable tradeoffs requires user judgment.

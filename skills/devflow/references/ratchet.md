@@ -13,6 +13,9 @@ for command names, arguments, options, limits, and validation rules.
 `ratchet` reads and writes `.ratchet` in its process working directory. Always run it from the
 project root. Running it elsewhere may access different state.
 
+Every `ratchet` write requires a completely clean Git worktree, including no untracked files.
+If a write fails because the worktree is dirty, discard the uncommitted changes and retry.
+
 ## Read selectively
 
 Begin with current status and prefer summaries. Inspect a task's log only to locate entries needed
@@ -26,9 +29,10 @@ is handed off. Summaries are concise and decision-oriented. They surface any mat
 consequential decision, difficult resolution, or blocker that can affect the next action or final
 report.
 
-Put specifications, evidence, reasoning, diagnostics, scenarios, locations, and actionable
-feedback in entry details so work can continue from the ledger alone. Respect the current size and
-format limits reported by the CLI.
+Put task-specific specifications, evidence, reasoning, diagnostics, scenarios, locations,
+actionable feedback, and references to existing repository sources in entry details so work can
+continue from the ledger and those sources. Respect the current size and format limits reported by
+the CLI.
 
 Persist consequential decisions that change or sharpen a task's expected outcome. Keep work
-context in the ledger rather than repeating it in handoff prompts.
+context or its repository reference in the ledger rather than repeating it in handoff prompts.

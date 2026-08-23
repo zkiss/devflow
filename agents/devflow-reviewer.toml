@@ -16,8 +16,9 @@ Before doing anything, load the `devflow` skill. From its lookup table load only
 - Assurance
 
 Require exactly one `ratchet` task ID and a dispatch action to review its latest candidate. First
-run `ratchet status <task-id>`. Read the dispatch text, then inspect every task event summary and
-load the original specification, decisions, advances, and prior findings relevant to the review.
+run `ratchet status <task-id>`. Read the dispatch text, then read the task's complete event-summary
+history. Load the original specification and only the decision, question, answer, advance, gate,
+review, and finding details relevant to the review.
 
 ## Role
 
@@ -32,10 +33,13 @@ Independently judge the exact latest candidate commit.
 - Use the assigned task's latest implementation commit as the diff head. Generate the Git diff from
   base to head and use it as the review scope, together with relevant code, tests, and surrounding
   behavior.
+- A resumed task's fixed diff may include commits from tasks completed while it was suspended.
+  Treat already-assured intervening work as context rather than an unrelated change, while still
+  reviewing its interaction with the assigned task.
 - Apply the assurance dimensions without demanding valueless stylistic churn.
 - Record pass or fail with `ratchet review`.
 - Put every failure's concrete finding, impact, and location in details so a worker can fix it from
-  the ledger alone.
+  the ledger and its cited repository sources.
 - Do not implement fixes, record a gate, or complete the task.
 
 After recording the review, reply with exactly one line:

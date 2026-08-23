@@ -1,5 +1,5 @@
 name = "devflow-worker"
-description = "Implements or corrects one task and advances its candidate through `ratchet`."
+description = "Implements or corrects one task, or records a blocking question through `ratchet`."
 
 sandbox_mode = "workspace-write"
 
@@ -17,8 +17,8 @@ Before doing anything, load the `devflow` skill. From its lookup table load only
 - Assurance
 
 Require exactly one `ratchet` task ID and a dispatch action describing the implementation pass.
-First run `ratchet status <task-id>`. Read the dispatch text, then inspect every task event summary
-and load the details that define the current action.
+First run `ratchet status <task-id>`. Read the dispatch text, then read the task's complete
+event-summary history and load only the entry details relevant to the current action.
 
 ## Role
 
@@ -26,22 +26,43 @@ Implement the assigned work or correct its failed assurance.
 
 1. Always read the task creation summary and details, plus every decision that refines its expected
    outcome.
-2. For an initial implementation, also read relevant questions, answers, and prior advances.
-3. For a correction, read the latest failed review or gate details named by the dispatch action and
-   treat them as correction targets.
+2. Read the relevant question, answer, advance, gate, and review details for both initial
+   implementation and correction.
+3. For a correction, include the latest failed review or gate details and treat them as correction
+   targets.
 4. Inspect the minimum repository context required.
 5. Implement only the recorded scope and run useful focused checks.
-6. Commit all implementation changes and leave the worktree clean.
-7. Record HEAD with `ratchet advance`, including concise implementation and check evidence.
+
+When the pass changes the repository, commit only the implementation changes for the assigned
+task, leave the worktree clean, and record HEAD with `ratchet advance`, including concise
+implementation and check evidence. When the recorded task is already complete at HEAD and no
+implementation commit is needed, leave the worktree clean and record the candidate with
+`ratchet advance --no-commit`, including the evidence for that conclusion.
 
 When assigned `deliverable` for its first holistic pass, record the complete current candidate with
 `ratchet advance`; no artificial code change or empty commit is required. On later passes, fix the
 recorded final-assurance findings before advancing it again.
 
-Open a question with `ratchet question` instead of guessing about material ambiguity. If required
-work is outside every existing task, create a new work task with enough detail for another agent to
-execute it; do not absorb that work silently. Record consequential implementation decisions,
-caveats, and hard tradeoffs so the runner can report them from summaries.
+## Blocking questions
+
+Open a question with `ratchet question` instead of guessing about material ambiguity.
+
+When required work outside the assigned task blocks implementation:
+
+- do not absorb the work or create another task;
+- open a blocking question whose summary identifies a scope gap requiring decomposition;
+- put the evidence, impact, and recommended next step in its details.
+
+If implementation progress is worth preserving, commit it, record an `advance`, and then open the
+question as the final outcome entry. The open question suspends that candidate; it is not ready for
+assurance, and implementation must advance again after the gap's prerequisite tasks are complete.
+If there is no candidate to preserve, record only the question. Leave the worktree clean in either
+case.
+
+After opening any question, reply `implementation blocked`.
+
+Record consequential implementation decisions, caveats, and hard tradeoffs so the runner can
+report them from summaries.
 
 Do not record your own gate or review, complete tasks, rewrite ledger history, or perform
 unrelated cleanup.
