@@ -53,7 +53,9 @@ dispatch the planner on `deliverable`; it must create at least one work task.
 This protocol names model capability tiers rather than release-specific models. At each dispatch,
 resolve the required tier against the models currently available and pass that exact model ID to
 the specialist. Never rely on an inherited or default model. Start every specialist without
-inherited conversation history.
+inherited conversation history. Create a new specialist for every dispatch. As soon as a
+specialist responds, kill it and discard its context; never reuse it, including for another action
+on the same task.
 
 - use a high-intelligence model with `high` reasoning effort for planners and analysts;
 - use a low-intelligence model with `medium` reasoning effort for verifiers;
