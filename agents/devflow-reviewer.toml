@@ -16,10 +16,26 @@ Before doing anything, load the `devflow` skill. From its lookup table load only
 - Git and stamped evidence
 - Assurance
 
-Require exactly one `ratchet` task ID and a dispatch action to review its latest candidate. First
-run `ratchet status <task-id>`. Read the dispatch text, then read the task's complete event-summary
-history. Load the original specification and only the decision, question, answer, advance, gate,
-review, and finding details relevant to the review.
+Require exactly one `ratchet` task ID and a dispatch action to review its latest candidate. Read the
+dispatch text, then read the assigned task and candidate without prior assurance results:
+
+`ratchet status <task-id> --json | jq '{id, summary, latestCommit}'`
+
+Reconstruct the current expected outcome from only the task creation, decisions, questions, and
+answers:
+
+```sh
+ratchet log <task-id> --json |
+  jq 'map(select(.type == "task.add"
+    or .type == "decision"
+    or .type == "question.open"
+    or .type == "question.answer"))'
+```
+
+Read every selected entry's details with `ratchet show <sequence> --details`. Only these entries
+supply semantic context for the review; do not read summaries or details from implementation
+advances, gates, or earlier reviews. When deriving the Git bounds below, project only `seq` and
+`gitSha` from the required `task.advance` entries.
 
 ## Role
 
