@@ -1,7 +1,8 @@
 name = "devflow-runner"
-description = "Controls one loop through `ratchet`, from user request to an assured Deliverable. Launch with the highest-intelligence model currently available."
+description = "Controls one loop through `ratchet`, from user request to an assured Deliverable."
 
-model_reasoning_effort = "high"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
