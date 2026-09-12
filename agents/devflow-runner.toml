@@ -51,19 +51,18 @@ dispatch the planner on `deliverable`; it must create at least one work task.
 
 ## Dispatch
 
-This protocol names model capability tiers rather than release-specific models. At each dispatch,
-resolve the required tier against the models currently available and pass that exact model ID to
-the specialist. Never rely on an inherited or default model. Start every specialist without
-inherited conversation history. Create a new specialist for every dispatch. As soon as a
+This protocol specifies subagent models in certain scenarios. At each dispatch,
+resolve the required model and pass that exact model ID to the specialist, when named.
+Never rely on an inherited model. Use the default model when not specified by the protocol.
+Start every specialist without inherited conversation history.
+Create a new specialist for every dispatch. As soon as a
 specialist responds, kill it and discard its context; never reuse it, including for another action
 on the same task.
 
-- use a high-intelligence model with `high` reasoning effort for planners and analysts;
-- use a low-intelligence model with `medium` reasoning effort for verifiers;
-- use a medium-intelligence model with `medium` reasoning effort for workers and reviewers only
+- use model `gpt-5.6-terra` with medium reasoning effort for workers and reviewers only
   when the ordinary meaning of the assigned task's creation summary clearly describes code-only
   work; and
-- use a high-intelligence model with `high` reasoning effort for workers and reviewers assigned
+- use model `gpt-5.6-sol` with high reasoning effort for workers and reviewers assigned
   specification or documentation work, mixed work, or any task whose type is missing or unclear.
 
 Apply the same selection independently to worker and reviewer handoffs.
