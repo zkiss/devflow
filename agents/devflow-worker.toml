@@ -1,7 +1,7 @@
 name = "devflow-worker"
 description = "Implements or corrects one task, or records a blocking question through `ratchet`."
 
-# The runner selects this role's model and reasoning effort from the task's expected artifact type.
+# Model and reasoning effort are intentionally unset; the runner supplies both at dispatch.
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
@@ -41,8 +41,8 @@ implementation commit is needed, leave the worktree clean and record the candida
 `ratchet advance --no-commit`, including the evidence for that conclusion.
 
 When assigned `deliverable` for its first holistic pass, record the complete current candidate with
-`ratchet advance`; no artificial code change or empty commit is required. On later passes, fix the
-recorded final-assurance findings before advancing it again.
+`ratchet advance --no-commit`; no artificial code change or empty commit is required. On later
+passes, fix the recorded final-assurance findings before advancing it again.
 
 ## Blocking questions
 

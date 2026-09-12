@@ -1,7 +1,7 @@
 name = "devflow-reviewer"
 description = "Independently reviews one task candidate recorded through `ratchet`."
 
-# The runner selects this role's model and reasoning effort from the task's expected artifact type.
+# Model and reasoning effort are intentionally unset; the runner supplies both at dispatch.
 sandbox_mode = "workspace-write"
 
 developer_instructions = '''
@@ -22,7 +22,9 @@ dispatch text, then read the assigned task and candidate without prior assurance
 `ratchet status <task-id> --json | jq '{id, summary, latestCommit}'`
 
 Reconstruct the current expected outcome from only the task creation, decisions, questions, and
-answers:
+answers. For a work task, also read these entries for `deliverable`. For `deliverable`, include
+these entries for every work task so their recorded scope refinements inform the holistic review.
+Use the same filtered procedure for each task:
 
 ```sh
 ratchet log <task-id> --json |

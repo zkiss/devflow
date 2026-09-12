@@ -14,7 +14,6 @@ for command names, arguments, options, limits, and validation rules.
 project root. Running it elsewhere may access different state.
 
 Every `ratchet` write requires a completely clean Git worktree, including no untracked files.
-If a write fails because the worktree is dirty, discard the uncommitted changes and retry.
 
 ## Read selectively
 
