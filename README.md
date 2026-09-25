@@ -48,3 +48,4 @@ without conversational context.
 - [Analyst](skills/devflow/roles/analyst.md)
 - [Shared-topic index](skills/devflow/SKILL.md)
 - [Codex adapters](agents/codex/)
+- [OpenCode adapters](agents/opencode/)
