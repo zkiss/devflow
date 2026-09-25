@@ -1,20 +1,13 @@
-# Agent definitions
+# Harness agent adapters
 
-Each TOML file in this directory is the complete protocol for one concrete role.
+Files below this directory adapt canonical Devflow roles to a concrete agent harness.
 
-Keep these concerns in the agent definition:
+Keep protocol behavior out of these adapters. Each adapter should contain only harness-specific
+metadata such as the concrete agent name, model/reasoning profile, sandbox settings, and a one-line
+instruction to load the `devflow` skill and follow its role file.
 
-- purpose and responsibilities;
-- allowed, required, and prohibited actions;
-- context-reading limits;
-- required routing identifiers and dispatch choices;
-- commands and where they run;
-- exceptional authority; and
-- response and handoff contracts.
+Use a profile suffix in the concrete agent name only when a role has multiple model profiles.
+Roles with one profile keep the unsuffixed role name.
 
-Name only the shared skill references the role needs. Mention the first required CLI command at the
-point where the role uses it, while leaving general CLI semantics and help discovery in the shared
-topic reference.
-
-Do not move role-specific instructions into a shared reference merely to avoid repetition. If a
-rule applies unchanged to every reader of a topic, move it to that topic and remove local copies.
+Canonical role behavior lives in `skills/devflow/roles/`; shared protocol knowledge lives in
+`skills/devflow/references/`.

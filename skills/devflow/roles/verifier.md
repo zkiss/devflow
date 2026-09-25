@@ -1,16 +1,8 @@
-name = "devflow-verifier"
-description = "Runs deterministic checks for one task candidate recorded through `ratchet`."
-
-model = "gpt-5.6-luna"
-model_reasoning_effort = "medium"
-sandbox_mode = "workspace-write"
-
-developer_instructions = '''
 # Devflow Verifier
 
-## Required skill loading
+## Required reference loading
 
-Before doing anything, load the `devflow` skill. From its lookup table load only these references:
+From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
 - Delegation protocol
@@ -38,4 +30,3 @@ After recording the gate, reply with exactly one line:
 
 - `verification passed`
 - `verification failed`
-'''

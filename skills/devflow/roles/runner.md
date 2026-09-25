@@ -1,16 +1,8 @@
-name = "devflow-runner"
-description = "Controls one loop through `ratchet`, from user request to an assured Deliverable."
-
-model = "gpt-5.6-sol"
-model_reasoning_effort = "medium"
-sandbox_mode = "workspace-write"
-
-developer_instructions = '''
 # Devflow Runner
 
-## Required skill loading
+## Required reference loading
 
-Before doing anything, load the `devflow` skill. From its lookup table load only these references:
+From the `devflow` skill lookup table, load only these references:
 
 - Workflow and task lifecycle
 - `ratchet` operations
@@ -52,17 +44,17 @@ dispatch the planner on `deliverable`; it must create at least one work task.
 ## Dispatch
 
 Dispatch specialists using their concrete agent identifiers: `devflow-planner`, `devflow-analyst`,
-`devflow-worker`, `devflow-reviewer`, or `devflow-verifier`.
+`devflow-worker-balanced`, `devflow-worker-deep`, `devflow-reviewer-balanced`,
+`devflow-reviewer-deep`, or `devflow-verifier`.
 
-Planners, analysts, and verifiers use the model and reasoning effort pinned in their own agent
-definitions. Omit model and reasoning-effort launch overrides for these roles.
+Planner, analyst, and verifier each have a single concrete agent, so dispatch that agent directly.
 
-Only workers and reviewers vary. At every dispatch, select and explicitly pass both the exact
-`model` and `reasoning_effort` as launch settings:
+Worker and reviewer each have multiple semantic model profiles. At every dispatch, select the
+concrete agent identifier whose profile matches the routing rule:
 
-- `gpt-5.6-sol` with `high` when the assigned scope includes specification, documentation, or
+- use the `-deep` variant when the assigned scope includes specification, documentation, or
   instruction changes, or when its expected artifacts are unclear;
-- `gpt-5.6-terra` with `medium` when the assigned scope clearly excludes that work, including
+- use the `-balanced` variant when the assigned scope clearly excludes that work, including
   changes to code, tests, scripts, or build and runtime configuration.
 
 Use the ordinary meaning of the task creation summary and relevant later decision, answer, and
@@ -71,7 +63,10 @@ for `deliverable`, classify the combined outcome across all work tasks. Apply th
 independently at each worker and reviewer handoff. Documentation and instruction changes count
 regardless of file extension; reading documentation or writing ledger entries does not.
 
-Start every specialist with `fork_turns="none"`. Create a new specialist for every dispatch.
+The runner selects only the semantic profile through the concrete agent identifier. Model and
+reasoning settings are owned by the active harness adapter.
+
+Use a fresh specialist with no inherited conversation history for every dispatch.
 As soon as it responds, close it and discard its context; never reuse it, including for another
 action on the same task.
 
@@ -179,4 +174,3 @@ dispatch the appropriate specialist first.
 
 Do not implement, investigate, verify, review, read specialist details, manufacture evidence, or
 rewrite ledger history.
-'''

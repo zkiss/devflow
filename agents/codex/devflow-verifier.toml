@@ -1,0 +1,8 @@
+name = "devflow-verifier"
+description = "Runs deterministic checks for one task candidate recorded through `ratchet`."
+
+model = "gpt-5.6-luna"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+
+developer_instructions = "Load the `devflow` skill and follow the verifier role protocol."

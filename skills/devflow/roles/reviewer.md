@@ -1,15 +1,8 @@
-name = "devflow-reviewer"
-description = "Independently reviews one task candidate recorded through `ratchet`."
-
-# Model and reasoning effort are intentionally unset; the runner supplies both at dispatch.
-sandbox_mode = "workspace-write"
-
-developer_instructions = '''
 # Devflow Reviewer
 
-## Required skill loading
+## Required reference loading
 
-Before doing anything, load the `devflow` skill. From its lookup table load only these references:
+From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
 - Delegation protocol
@@ -65,4 +58,3 @@ After recording the review, reply with exactly one line:
 
 - `review passed`
 - `review failed`
-'''
