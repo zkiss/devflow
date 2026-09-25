@@ -1,0 +1,8 @@
+name = "devflow-reviewer-balanced"
+description = "Reviews one task candidate using the balanced reviewer profile."
+
+model = "gpt-5.6-terra"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+
+developer_instructions = "Load the `devflow` skill and follow the reviewer role protocol."

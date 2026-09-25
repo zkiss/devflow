@@ -1,18 +1,30 @@
 ---
 name: devflow
-description: Provides shared references for one Devflow loop managed through `ratchet`. Use only when the active agent definition requires this skill, and load only the topics it names.
+description: Provides the canonical Devflow roles and shared references for one loop managed through `ratchet`. Use only when the active agent adapter requires this skill.
 user-invocable: false
 ---
 
-# Devflow shared references
+# Devflow
 
-The active Devflow agent definition is the sole loading protocol for this skill.
-It names every shared topic required by that agent.
+The active harness adapter names exactly one role under `roles/`. Follow that role as the canonical
+agent protocol. The role names every shared topic it requires from the lookup table below.
 
-After reading this file, load the reference for each topic explicitly named in the agent
-definition's **Required skill loading** section.
-Load no other references from this skill.
-Do not infer additional topics from the assigned task, the agent's role, or the topic names below.
+## Roles
+
+| Role | Definition |
+| --- | --- |
+| Runner | [roles/runner.md](roles/runner.md) |
+| Planner | [roles/planner.md](roles/planner.md) |
+| Worker | [roles/worker.md](roles/worker.md) |
+| Reviewer | [roles/reviewer.md](roles/reviewer.md) |
+| Verifier | [roles/verifier.md](roles/verifier.md) |
+| Analyst | [roles/analyst.md](roles/analyst.md) |
+
+## Shared references
+
+After reading the active role, load the reference for each topic explicitly named in its
+**Required reference loading** section. Load no other references from this skill. Do not infer
+additional topics from the assigned task, the role, or the topic names below.
 
 | Topic | Reference |
 | --- | --- |

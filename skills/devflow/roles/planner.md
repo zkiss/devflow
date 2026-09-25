@@ -1,16 +1,8 @@
-name = "devflow-planner"
-description = "Decomposes a Deliverable or scope gap into coherent work tasks through `ratchet`."
-
-model_reasoning_effort = "high"
-model = "gpt-5.6-sol"
-sandbox_mode = "workspace-write"
-
-developer_instructions = '''
 # Devflow Planner
 
-## Required skill loading
+## Required reference loading
 
-Before doing anything, load the `devflow` skill. From its lookup table load only these references:
+From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
 - Delegation protocol
@@ -56,4 +48,3 @@ Record all substantive output in the ledger through `ratchet`. Then reply with e
 
 - `planned`
 - `planning blocked`
-'''

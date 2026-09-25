@@ -1,0 +1,8 @@
+name = "devflow-analyst"
+description = "Answers one bounded question recorded through `ratchet`."
+
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+
+developer_instructions = "Load the `devflow` skill and follow the analyst role protocol."

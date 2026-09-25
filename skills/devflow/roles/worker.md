@@ -1,15 +1,8 @@
-name = "devflow-worker"
-description = "Implements or corrects one task, or records a blocking question through `ratchet`."
-
-# Model and reasoning effort are intentionally unset; the runner supplies both at dispatch.
-sandbox_mode = "workspace-write"
-
-developer_instructions = '''
 # Devflow Worker
 
-## Required skill loading
+## Required reference loading
 
-Before doing anything, load the `devflow` skill. From its lookup table load only these references:
+From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
 - Delegation protocol
@@ -72,4 +65,3 @@ After recording the result, reply with exactly one line:
 
 - `implemented`
 - `implementation blocked`
-'''

@@ -1,0 +1,8 @@
+name = "devflow-reviewer-deep"
+description = "Reviews one task candidate using the deep reviewer profile."
+
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+
+developer_instructions = "Load the `devflow` skill and follow the reviewer role protocol."

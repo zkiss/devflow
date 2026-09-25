@@ -12,7 +12,7 @@ skill_destination="$skill_install_dir/devflow"
 agent_sources=()
 agent_destinations=()
 
-for agent_source in "$repo_root"/agents/*.toml; do
+for agent_source in "$repo_root"/agents/codex/*.toml; do
     agent_sources+=("$agent_source")
     agent_destinations+=("$agent_install_dir/${agent_source##*/}")
 done
