@@ -63,9 +63,6 @@ for `deliverable`, classify the combined outcome across all work tasks. Apply th
 independently at each worker and reviewer handoff. Documentation and instruction changes count
 regardless of file extension; reading documentation or writing ledger entries does not.
 
-The runner selects only the semantic profile through the concrete agent identifier. Model and
-reasoning settings are owned by the active harness adapter.
-
 Use a fresh specialist with no inherited conversation history for every dispatch.
 As soon as it responds, close it and discard its context; never reuse it, including for another
 action on the same task.
