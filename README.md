@@ -49,3 +49,4 @@ without conversational context.
 - [Shared-topic index](skills/devflow/SKILL.md)
 - [Codex adapters](agents/codex/)
 - [OpenCode adapters](agents/opencode/)
+- [Pi-subagents adapters](agents/pi-subagents/)
