@@ -9,7 +9,8 @@
   that task's first `advance`. If no earlier `advance` exists, use the task creation SHA.
 - If other tasks advance while a task is suspended, its later fixed-base diff includes those
   intervening commits.
-- The `deliverable` diff base is its creation SHA.
+- Every checkpoint's holistic diff base is the creation SHA of `deliverable-1`, preserving the
+  cumulative branch scope across follow-ups.
 - The latest `advance` SHA for the reviewed task is the diff head.
 - An `advance` normally requires a newer descendant commit; `--no-commit` permits the current HEAD
   only when no implementation commit is needed.

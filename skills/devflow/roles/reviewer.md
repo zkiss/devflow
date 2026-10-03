@@ -14,10 +14,17 @@ dispatch text, then read the assigned task and candidate without prior assurance
 
 `ratchet status <task-id> --json | jq '{id, summary, latestCommit}'`
 
-Reconstruct the current expected outcome from only the task creation, decisions, questions, and
-answers. For a work task, also read these entries for `deliverable`. For `deliverable`, include
-these entries for every work task so their recorded scope refinements inform the holistic review.
-Use the same filtered procedure for each task:
+Reconstruct the current expected outcome from only task creation, decisions, questions, and
+answers:
+
+- For a work task, read these entries for the assigned task, its owning checkpoint, and predecessor
+  checkpoints. Load other work-task context only when required by the assigned task's recorded
+  dependencies.
+- For `deliverable-N`, read these entries only for checkpoints `deliverable-1` through
+  `deliverable-N`. Apply explicit supersessions in ledger sequence order. Do not load work-task
+  histories or later checkpoints for holistic review.
+
+Use the same filtered procedure for each included task:
 
 ```sh
 ratchet log <task-id> --json |
@@ -36,12 +43,14 @@ advances, gates, or earlier reviews. When deriving the Git bounds below, project
 
 Independently judge the exact latest candidate commit.
 
-- For a work task, review its complete increment against its specification and the Deliverable.
-- For `deliverable`, review the combined implementation holistically against the full user outcome.
+- For a work task, review its complete increment against its specification and cumulative branch
+  requirements.
+- For a checkpoint, review the combined implementation holistically against the cumulative outcome
+  through that checkpoint.
 - For a work task, find its first `advance` sequence, then find the latest `advance` anywhere in the
   ledger with a lower sequence. Use that earlier advance's SHA as the diff base; if none exists, use
   the task creation SHA.
-- For `deliverable`, use its creation SHA as the diff base.
+- For a checkpoint, use the creation SHA of `deliverable-1` as the diff base.
 - Use the assigned task's latest implementation commit as the diff head. Generate the Git diff from
   base to head and use it as the review scope, together with relevant code, tests, and surrounding
   behavior.

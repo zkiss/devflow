@@ -7,14 +7,13 @@ shared skill references listed below. Harness-specific agent files are shallow a
 models and point at those canonical roles. The [documentation ownership rules](AGENTS.md) define
 that split. When this overview differs from a protocol source, the protocol source governs.
 
-One loop produces one **Deliverable**: a user-requested outcome that should be accepted and shipped
-as one unit, such as a pull request or Jira ticket. The ledger preserves the loop's state across
-agent restarts.
+Devflow drives a user-requested branch goal that should be accepted and shipped as one unit, such
+as a pull request or Jira ticket. The ledger preserves its history across agent restarts and
+follow-up requests.
 
-The runner records the Deliverable in a reserved `deliverable` task. The planner creates one or
-more work tasks, each a coherent increment toward that outcome. The runner drives every work task
-through implementation, verification, review, and correction until both assurance results pass.
-After all work tasks are complete, it runs the same loop on `deliverable` as a holistic final pass.
+The runner records the requested outcome. The planner makes it actionable and breaks it into work
+tasks when useful. The runner drives tasks through implementation, verification, review, and
+correction until both assurance results pass. Final assurance covers the combined outcome.
 
 The role family consists of:
 
@@ -29,10 +28,10 @@ Worker and reviewer have balanced and deep concrete agent variants because the r
 model profile from task scope. Roles with one model profile keep their unsuffixed agent name.
 
 Every concrete agent loads the `devflow` skill and follows its canonical role definition. The role
-then loads only the shared references it names. Specialists read their instructions and prior
-results from the ledger through `ratchet` and from repository sources cited there, write
-substantive results back, and return only a terse outcome. The runner uses task status and entry
-summaries to choose the next action without loading implementation context.
+then loads only the shared references it names. Specialists use the ledger and repository sources
+for their work, record substantive results through `ratchet`, and return only a terse outcome.
+The runner uses task status and entry summaries to choose the next action without loading
+implementation context.
 
 After holistic assurance passes, the runner reports the result and material caveats, decisions,
 or difficulties to the user. The ledger remains available so the work can be resumed or handed off

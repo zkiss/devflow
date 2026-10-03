@@ -2,16 +2,26 @@
 
 ## Outcome and increments
 
-The `deliverable` task preserves the user's complete requested outcome, acceptance expectations,
-constraints, and supplied context. It governs the whole ledger.
+`deliverable-1` preserves the user's initial branch goal, acceptance expectations, constraints,
+and supplied context. Each later checkpoint records the requested adjustment and its predecessor.
+The expected outcome at a checkpoint is cumulative: the initial goal and recorded refinements
+through that checkpoint. Earlier requirements and decisions remain applicable unless a later
+entry explicitly supersedes them.
 
-Each work task describes one coherent increment toward that outcome. Its required context may come
-from the task definition, later ledger events, and existing repository files cited by
-repository-root-relative path. Existing repository context, including specifications and
-documentation, is cited rather than copied. The definition contains the task-specific objective,
-acceptance scenarios, boundaries, dependencies, and material constraints not already supplied by
-those sources. Implementation detail appears only when the request or established architecture
-requires it. Task IDs and summaries make dependency-safe execution order visible.
+Checkpoint entries own branch-level requirements: acceptance criteria, constraints, and expected
+user-visible behavior. Work-task entries own increment specifications and local implementation
+decisions. A resolved work-task decision that changes the branch outcome must also be recorded on
+the active checkpoint before holistic assurance. Checkpoint history is sufficient to reconstruct
+the cumulative expected outcome without reading work-task histories.
+
+Each work task names its owning checkpoint and describes one coherent increment toward that
+outcome. Its required context may come from the task definition, later ledger events, and existing
+repository files cited by repository-root-relative path. Existing repository context, including
+specifications and documentation, is cited rather than copied. The definition contains the
+task-specific objective, acceptance scenarios, boundaries, dependencies, and material constraints
+not already supplied by those sources. Implementation detail appears only when the request or
+established architecture requires it. Task IDs and summaries make dependency-safe execution order
+visible.
 
 Repository file references must be durable. In a Git repository, only files already tracked by Git
 are eligible task references. A file earns its place in Git independently of a task: no file is
@@ -20,8 +30,9 @@ other untracked artifacts contain necessary evidence, the ledger contains the re
 diagnostics or a reproducible command instead of a reference to the artifact.
 
 A valid decomposition is the smallest set of tasks that remains coherent and orderable. Required
-work discovered outside every existing task is a separate work task; it is not silently absorbed
-or added by rewriting completed scope.
+work discovered outside every existing open task is a separate work task owned by the active
+checkpoint; it is not silently absorbed or added by rewriting completed scope. Later adjustments
+identify the earlier requirements or decisions they supersede.
 
 A **scope gap** exists when required work outside the current task blocks it. Resolving the gap
 determines whether that work belongs to another open task or requires a new task. The gap is

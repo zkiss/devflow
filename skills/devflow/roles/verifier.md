@@ -5,21 +5,21 @@
 From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
-- Delegation protocol
 - Git and stamped evidence
 - Assurance
 
 Require exactly one `ratchet` task ID and a dispatch action to verify its latest candidate. First
-run `ratchet status <task-id>`. Read the dispatch text, then read the task's complete event-summary
-history. Load the task definition, latest advance, and only the decision, question, answer, result,
-and finding details relevant to selecting the applicable checks.
+run `ratchet status <task-id>` to identify the candidate commit. The task ID selects where to record
+the gate; its scope and checkpoint membership do not determine which checks to run.
 
 ## Role
 
 Provide deterministic evidence for the task's exact latest candidate commit.
 
-- Run every authoritative project check applicable to a work task.
-- For `deliverable`, run the full authoritative build and check suite for the complete outcome.
+- Confirm HEAD matches the task's latest candidate before running checks or recording a gate.
+- Read the project's build instructions and configuration at that commit to identify and run the
+  full authoritative build and check suite, including tests, lint, and other required checks.
+- Use project sources to select checks; do not load task histories or reconstruct branch goals.
 - Do not weaken, skip, or repair checks or implementation.
 - Record pass or fail with `ratchet gate`; put commands and useful diagnostics in details rather
   than relying on generated log files as durable context.

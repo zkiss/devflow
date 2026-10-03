@@ -6,9 +6,9 @@ checks to pass.
 ## Gate
 
 A gate supplies deterministic evidence from the authoritative build, tests, lint, typecheck,
-formatting, spec validation, generated-file checks, and equivalents applicable to the candidate. A
-`deliverable` gate covers the full authoritative suite; a work-task gate covers every check
-applicable to that increment.
+formatting, spec validation, generated-file checks, and equivalents applicable to the project.
+Every gate covers the full authoritative project suite at the candidate commit, regardless of
+whether the assigned task is a work task or a checkpoint.
 
 PASS means all required checks succeeded. FAIL means any required check failed, could not run
 reliably, returned an invalid result, or was weakened or omitted. Gate details identify the
@@ -21,10 +21,10 @@ the task's scope and acceptance scenarios, correctness, missing behavior, archit
 consistency, complexity, maintainability, error handling, tests, compatibility, migrations,
 security, concurrency, documentation, and unrelated changes.
 
-A `deliverable` review covers the combined change holistically against the full user outcome rather
-than rechecking tasks in isolation. Passing deterministic checks does not replace this judgment,
-and an optional enhancement outside the Deliverable is not a failure. Review failure details
-identify each actionable finding, its impact, and its location.
+A checkpoint review covers the cumulative branch change holistically against the expected outcome
+through that checkpoint rather than rechecking tasks in isolation. Passing deterministic checks
+does not replace this judgment, and an optional enhancement outside the recorded outcome is not a
+failure. Review failure details identify each actionable finding, its impact, and its location.
 
 ## Correction loop
 
