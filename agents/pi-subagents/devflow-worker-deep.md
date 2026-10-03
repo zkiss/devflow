@@ -1,7 +1,7 @@
 ---
 name: devflow-worker-deep
 description: Implements or corrects one task using the deep worker profile.
-model: openai/gpt-5.6-sol
+model: openai/gpt-6.1-sol
 thinking: high
 inheritProjectContext: true
 inheritSkills: false

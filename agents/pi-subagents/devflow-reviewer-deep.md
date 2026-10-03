@@ -1,7 +1,7 @@
 ---
 name: devflow-reviewer-deep
 description: Reviews one task candidate using the deep reviewer profile.
-model: openai/gpt-5.6-sol
+model: openai/gpt-6.1-sol
 thinking: high
 inheritProjectContext: true
 inheritSkills: false
