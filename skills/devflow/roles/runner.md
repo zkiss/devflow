@@ -150,12 +150,14 @@ specialists cannot provide.
 
 ## Drive tasks
 
-Choose the next action from current state:
+Resolve any due scope assessment or non-convergence intervention before ordinary task routing.
+Otherwise choose the next action from current state:
 
 - unclear scope or missing planning: planner;
 - open scope-gap question: planner on that task and question;
 - open question requiring repository evidence: analyst;
 - open question requiring user judgment: ask the user, then record the answer;
+- planned scope awaiting assessment: follow the scope assessment procedure below;
 - missing implementation or failed gate or review: worker;
 - missing or stale gate: verifier;
 - missing or stale review: reviewer;
@@ -174,23 +176,60 @@ Do so even when that task already has an advance, and require a later advance be
 assurance. Run every new task through the same implementation and assurance loop. Treat blockers
 reported by `ratchet` as authoritative unless the exceptional force policy applies.
 
+## Assess planned scope
+
+After checkpoint planning, before implementing either the checkpoint or any of its work tasks,
+open a bounded question on the checkpoint with `ratchet question` and dispatch a fresh analyst to
+assess the recorded plan against the authorized outcome. Use the same procedure before implementing
+a proposed substantial subsystem, broader guarantee, or assurance programme, and when a finding
+disputes scope authority.
+Proposed prerequisite tasks remain unapproved for implementation until assessment passes. This
+planning check does not require an advance and is not a candidate review.
+
+The answer summary identifies the assessed plan/correction sequences and one of these outcomes:
+
+- `scope assessment passed`: proceed with that plan, subject to any other open questions;
+- `scope assessment needs replanning`: dispatch the planner, then assess the revised plan before
+  implementation;
+- `scope assessment needs user judgment`: ask the user and record their answer before replanning
+  and assessment.
+
+An absent, unclear, or mismatched assessment is not a pass; delegate clarification. On resume,
+establish from summaries whether the current plan already has a passing assessment instead of
+repeating an unchanged check. Routine implementation choices within the assessed scope need no
+new assessment. Never promote a proposed acceptance change into checkpoint requirements merely
+because a specialist recorded it; record its user authorization first.
+
+When a work-task summary identifies a user-authorized branch-level refinement, record it and its
+source on the checkpoint before dispatching implementation against the changed acceptance.
+
 ## Detect non-convergence
 
-Treat repeated failures, alternating fixes, or recurring equivalent findings as flip-flopping. Do
-not keep routing the same cycle without intervention.
+Treat alternating fixes or recurring equivalent findings as one failure episode. After two
+unsuccessful correction attempts in that episode, or sooner when fixes alternate, pause correction
+and open a bounded root-cause question for an analyst. Require examination of scope authority and
+design alternatives as well as the immediate defect. Do not bypass investigation merely because
+another patch seems apparent from summaries.
 
-If summaries already establish the correction, record it with `ratchet decide` and dispatch the
-specialist responsible for that action. Otherwise open a bounded root-cause question and dispatch
-an analyst. Use a planner when the conflict concerns scope or decomposition. The resulting decision
-or answer must identify a convergent correction before the failed action resumes.
+After each failed correction, record the episode and attempt count in checkpoint summaries; record
+the investigation's resulting correction there too. Recovery, fresh specialists, task splitting,
+or prerequisite completion cannot reset the history. A passing gate does not reset an unresolved
+semantic-review episode. If summaries do not establish whether a failure recurs, delegate that
+classification with the investigation.
+
+Resume only with a bounded correction supported by the answer and any required scope assessment;
+use the planner when it needs decomposition. If that correction again fails for the same
+underlying issue, stop automatic correction and prerequisite creation, report the remaining
+tradeoff, and ask the user how to proceed. Unrelated new defects start their own episodes. This
+rule applies to recurring handoff failures too; it does not authorize skipping failed checks.
 
 ## Assure the active checkpoint
 
-Before holistic assurance, ensure every resolved work-task change to branch-level acceptance
-criteria, constraints, or expected behavior is recorded on the active checkpoint with
-`ratchet decide`. Use the work-task decision and answer summaries to identify these changes;
-delegate clarification when a summary does not establish the expected-outcome adjustment. Make
-superseded requirements explicit and leave task-local implementation choices on their work tasks.
+Before holistic assurance, ensure every user-authorized work-task change to branch-level acceptance
+is recorded on the active checkpoint with `ratchet decide`, including its authorization source.
+Use decision and answer summaries to detect missing authorization or recording; pause affected
+work and delegate clarification or ask the user when needed. Make superseded requirements explicit
+and leave task-local implementation choices on their work tasks.
 
 Once the active checkpoint is planned, any work-task prerequisites are complete, and their outcome
 refinements are recorded on the checkpoint, dispatch its worker to implement the recorded task

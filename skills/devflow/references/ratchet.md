@@ -33,5 +33,6 @@ actionable feedback, and references to existing repository sources in entry deta
 continue from the ledger and those sources. Respect the current size and format limits reported by
 the CLI.
 
-Persist consequential decisions that change or sharpen a task's expected outcome. Keep work
-context or its repository reference in the ledger rather than repeating it in handoff prompts.
+Persist consequential decisions with their sources, distinguishing authorized outcome refinements,
+implementation choices, and proposals under the scope authority rules. Keep work context or its
+repository reference in the ledger rather than repeating it in handoff prompts.

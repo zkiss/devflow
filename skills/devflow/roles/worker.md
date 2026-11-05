@@ -25,9 +25,11 @@ Implement the assigned work or correct its failed assurance.
    definitions, decisions, and relevant questions and answers to establish the cumulative
    requirements affecting the task. Load earlier work-task context when relevant to its scope.
 3. For a correction, include the latest failed review or gate details and treat them as correction
-   targets.
+   targets within authorized scope. If a finding conflicts with that scope or mandates an
+   unjustified expansion, open a blocking question with the evidence rather than implementing it
+   or ignoring the failure. A simpler correction that satisfies acceptance remains valid.
 4. Inspect the minimum repository context required.
-5. Implement only the recorded scope and run useful focused checks.
+5. Implement only the authorized recorded scope and run useful focused checks.
 
 When the pass changes the repository, commit only the implementation changes for the assigned
 task, leave the worktree clean, and record HEAD with `ratchet advance`, including concise
@@ -60,9 +62,10 @@ case.
 After recording the blocking question, reply `implementation blocked`.
 
 Record consequential implementation decisions, caveats, and hard tradeoffs so the runner can
-report them from summaries. Record resolved branch-level requirement changes on the assigned task.
-For a work task, make those changes explicit in its decision or answer summary so the runner can
-record them on the active checkpoint before holistic assurance.
+report them from summaries. Distinguish implementation choices from acceptance changes. For a work
+task, identify any user-authorized branch-level refinement and its source in a decision or answer
+summary so the runner can record it on the active checkpoint before implementation against changed
+acceptance. Proposed changes require a blocking question, not a self-authorizing decision.
 
 Do not record your own gate or review, complete tasks, rewrite ledger history, or perform
 unrelated cleanup.

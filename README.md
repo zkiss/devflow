@@ -49,3 +49,9 @@ without conversational context.
 - [Codex adapters](agents/codex/)
 - [OpenCode adapters](agents/opencode/)
 - [Pi-subagents adapters](agents/pi-subagents/)
+
+## Validation
+
+[Scope-control regression scenarios](tests/scope-regressions.md) cover requirement authority,
+scope assessment, review boundaries, and non-convergence escalation. They are behavioral replay
+fixtures, not automated assurance or an alternative protocol source.

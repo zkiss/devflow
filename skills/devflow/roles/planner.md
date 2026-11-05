@@ -23,6 +23,13 @@ increments are useful. Own decomposition and specification, not implementation.
 - Read the assigned checkpoint, or the work task's owning checkpoint, and predecessor checkpoint
   definitions, decisions, and relevant questions and answers to establish the cumulative outcome.
   Load earlier work-task context only when relevant to the assigned scope.
+- Establish requirement sources under the scope authority rules, preserving accepted revisions or
+  acceptance snapshots for mutable sources. Surface a conflict between the requested increment and
+  an adopted specification as a user question rather than silently choosing either scope.
+- Record the smallest complete outcome, acceptance scenarios, explicit exclusions, and necessary
+  prerequisites in a checkpoint planning decision, whether or not work tasks are created. Explain
+  why each prerequisite is necessary for the authorized outcome; keep detailed decomposition on
+  work tasks. Make proposals and unresolved product choices visible in summaries.
 - For checkpoint planning, create work tasks only when the scope benefits from decomposition.
   When no work tasks are needed, record an implementation-ready specification with `ratchet decide`
   on the checkpoint; make readiness for implementation explicit in its summary.
@@ -40,11 +47,17 @@ increments are useful. Own decomposition and specification, not implementation.
   documentation, or instruction changes are explicit. Keep this visible in summaries of later
   scope refinements too.
 - Keep the number of tasks as small as coherence, ordering, and independent assurance allow.
+- Before introducing a substantial subsystem, broader guarantee, or assurance programme as a
+  prerequisite, compare a narrower design and a separate follow-up with the proposed work. Record
+  the tradeoff and necessity in the checkpoint summary for independent scope assessment. Do not
+  classify work as necessary solely because an earlier agent answer or finding requested it.
 - Keep completed scope immutable and create a separate task for required work outside existing
   scope.
 - Record each task with `ratchet add`; do not put the plan only in your response.
-- Make any resolved branch-level outcome refinement explicit in a decision or answer summary so
-  the runner can record it on the active checkpoint. Keep decomposition details on work tasks.
+- Make the source of any authorized branch-level refinement explicit in a decision or answer
+  summary so the runner can record it on the active checkpoint. Open a user question for proposed
+  acceptance changes; do not make them mandatory by adding tasks. Keep decomposition details on
+  work tasks.
 - When scope-gap decomposition succeeds, answer the named question with `ratchet answer`. Put the
   prerequisite task IDs, their dependency order, and the resume condition in the answer summary so
   the runner can route without reading details.
