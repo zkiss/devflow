@@ -117,14 +117,36 @@ requirements, findings, diagnostics, proposed fixes, and prior conclusions in th
 
 Keep the handoff cursor at the highest processed ledger sequence. Whenever you write an entry
 yourself, update the cursor from the sequence shown by that command. The specialist response
-signals that the handoff ended; it does not carry the result.
+signals that the handoff ended; it does not establish the result.
 
 After the response, run the global `ratchet log --start <next-sequence>`, where `<next-sequence>` is
 the cursor plus one because `--start` is inclusive. The returned entries are the handoff outcome.
 Read their summaries, interpret multiple entries together, reread status, and then move the cursor
-to the highest returned sequence. An empty result means the handoff made no durable progress.
-Treat it as a protocol or execution failure: do not accept the response as an outcome or redispatch
-the same action. Correct an evident protocol failure; otherwise stop and ask the user.
+to the highest returned sequence. Check whether the required outcome for the dispatched action
+was recorded; incidental entries do not establish completion of the action.
+
+## Recover failed handoffs
+
+An empty log, a missing required outcome, an error response, or a failed dispatch triggers recovery,
+not an automatic stop. Assess current status and new summaries before choosing the next action:
+
+- If the required outcome is already recorded, preserve it and route from current state; do not
+  repeat completed work because the response was missing or malformed.
+- If the outcome is missing or partial, record the failure, reported diagnostics, and recovery
+  action with `ratchet decide` on the assigned task. Distinguish reported claims from verified
+  state. Dispatch a fresh specialist to reconcile existing progress and finish the missing action.
+- For a missing worker advance, dispatch a worker to inspect the existing implementation and Git
+  state, preserve legitimate changes, and record the candidate under the normal commit and advance
+  rules. Do not advance it yourself or send an unrecorded candidate to assurance.
+- If the cause or safe recovery is unclear, record a bounded diagnostic question and dispatch an
+  analyst, or a planner when the issue concerns scope. Apply the non-convergence procedure to
+  recurring failures rather than retrying the same action unchanged.
+
+Keep recovery within normal role boundaries, context limits, and evidence requirements. Delegate
+nontrivial diagnosis and require recovery specialists to persist any context carried outside the
+ledger once writes are possible. Continue autonomously when a safe next action exists. Ask the
+user only when recovery requires their judgment, authorization, or an external intervention that
+specialists cannot provide.
 
 ## Drive tasks
 
@@ -158,9 +180,9 @@ Treat repeated failures, alternating fixes, or recurring equivalent findings as 
 not keep routing the same cycle without intervention.
 
 If summaries already establish the correction, record it with `ratchet decide` and dispatch the
-worker. Otherwise open a bounded root-cause question and dispatch an analyst. Use a planner when
-the conflict concerns scope or decomposition. The resulting decision or answer must identify a
-convergent correction before implementation resumes.
+specialist responsible for that action. Otherwise open a bounded root-cause question and dispatch
+an analyst. Use a planner when the conflict concerns scope or decomposition. The resulting decision
+or answer must identify a convergent correction before the failed action resumes.
 
 ## Assure the active checkpoint
 

@@ -57,7 +57,7 @@ assurance, and implementation must advance again after the gap's prerequisite ta
 If there is no candidate to preserve, record only the question. Leave the worktree clean in either
 case.
 
-After opening any question, reply `implementation blocked`.
+After recording the blocking question, reply `implementation blocked`.
 
 Record consequential implementation decisions, caveats, and hard tradeoffs so the runner can
 report them from summaries. Record resolved branch-level requirement changes on the assigned task.

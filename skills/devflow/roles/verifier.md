@@ -5,6 +5,7 @@
 From the `devflow` skill lookup table, load only these references:
 
 - `ratchet` operations
+- Delegation protocol
 - Git and stamped evidence
 - Assurance
 
