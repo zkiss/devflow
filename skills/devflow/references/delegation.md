@@ -16,6 +16,13 @@ between them rather than guessing.
 Substantive results belong in the ledger so subsequent work can proceed from recorded state rather
 than conversational memory.
 
+## Process ownership and cleanup
+
+Stop all long-running processes you started, including their descendants, before handing off or
+returning, even on blocked or error outcomes, unless the user explicitly asks to keep them running.
+Leave pre-existing processes and other agents' processes alone. Verify cleanup and report any
+failure through the error handoff below.
+
 ## Error handling
 
 Attempt trivial local recovery within the current role and action, such as correcting an evident
